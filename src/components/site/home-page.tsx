@@ -1,4 +1,5 @@
-import { ArrowDown, ArrowRight, BadgeCheck, Clock3, MapPin, Wrench } from "lucide-react";
+import { ArrowRight, BadgeCheck, Clock3, MapPin, Wrench } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import workshopImage from "@/assets/charlie-workshop.jpg";
 import { featuredServices } from "@/lib/services";
@@ -68,7 +69,7 @@ export function HomePage() {
         </div>
         <div className="section-action">
           <Button asChild variant="outline" className="brand-button">
-            <a href="/services">Explore all services <ArrowRight aria-hidden="true" /></a>
+            <Link to="/services">Explore all services <ArrowRight aria-hidden="true" /></Link>
           </Button>
         </div>
       </section>
@@ -85,9 +86,6 @@ export function HomePage() {
         </Button>
       </section>
 
-      <div className="site-container" aria-hidden="true" style={{ height: 1 }}>
-        <a href="#top" className="sr-only"><ArrowDown /></a>
-      </div>
     </SiteFrame>
   );
 }
