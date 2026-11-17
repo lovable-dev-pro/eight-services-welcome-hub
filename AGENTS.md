@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Site structure
+- Keep the public business website as separate TanStack Start leaf pages with shared site navigation and footer, so each page remains directly visitable and can have unique metadata.
