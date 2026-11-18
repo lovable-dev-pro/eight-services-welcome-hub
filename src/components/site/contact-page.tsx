@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, MessageCircle, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, MessageCircle, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { businessContact, SiteFrame } from "@/components/site/site-frame";
 
@@ -58,11 +58,33 @@ export function ContactPage() {
           ))}
         </div>
 
-        <aside className="contact-footnote">
-          <h2>Requesting a quote?</h2>
-          <p>Call, email or message Charlie on WhatsApp with a few details about your vehicle and the service you need.</p>
-          <p>For an email, you can include your name, vehicle details, the service you’re interested in and a convenient way to reach you.</p>
-        </aside>
+        <section className="contact-request" aria-labelledby="contact-request-title">
+          <div className="contact-request-heading">
+            <div className="section-kicker">Quote enquiry</div>
+            <h2 id="contact-request-title">Tell Charlie what your vehicle needs.</h2>
+            <p>Share your details and Charlie can get back to you about your vehicle.</p>
+          </div>
+          <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+            <div className="contact-form-field">
+              <label htmlFor="contact-name">Name</label>
+              <input id="contact-name" name="name" type="text" autoComplete="name" maxLength={100} required />
+            </div>
+            <div className="contact-form-field">
+              <label htmlFor="vehicle-registration">Vehicle registration</label>
+              <input id="vehicle-registration" name="vehicleRegistration" type="text" autoComplete="off" maxLength={20} required />
+            </div>
+            <div className="contact-form-field contact-form-message">
+              <label htmlFor="contact-message">Message</label>
+              <textarea id="contact-message" name="message" rows={5} maxLength={1500} required />
+            </div>
+            <div className="contact-form-submit">
+              <p id="contact-form-status" role="status">Wix needs to be connected before requests can be saved.</p>
+              <Button type="submit" variant="brand" className="brand-button" disabled aria-describedby="contact-form-status">
+                <Send aria-hidden="true" /> Send enquiry
+              </Button>
+            </div>
+          </form>
+        </section>
       </section>
     </SiteFrame>
   );
