@@ -6,6 +6,8 @@
       "thankYou": "Thank you! Charlie will review your vehicle details and get back to you shortly.",
       "fields": [
         { "label": "Full Name", "kind": "text", "required": true, "placeholder": "e.g. John Smith" },
+        { "label": "Email Address", "kind": "email", "required": true, "placeholder": "e.g. john@example.com" },
+        { "label": "Phone Number", "kind": "phone", "required": false, "placeholder": "e.g. 07940 834897" },
         { "label": "Vehicle Registration", "kind": "text", "required": true, "placeholder": "e.g. AB12 CDE" },
         { "label": "Message & Service Details", "kind": "textarea", "required": true, "placeholder": "Please describe the vehicle issue, service needed, and your location..." }
       ]

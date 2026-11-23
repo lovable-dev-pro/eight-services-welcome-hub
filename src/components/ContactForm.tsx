@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { createSubmission } from '../wix/forms/submissions';
+import { wixFetch } from '../wix/sdk';
+
+const FORM_ID = 'cef50cf7-df62-4308-b30e-fb065a3c59e9';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
+    phone: '',
     vehicleRegistration: '',
     message: ''
   });
@@ -20,9 +26,16 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.vehicleRegistration.trim() || !formData.message.trim()) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.vehicleRegistration.trim() || !formData.message.trim()) {
       setStatus('error');
-      setErrorMessage('Please fill in all required fields.');
+      setErrorMessage('Please fill in all required fields (Name, Email, Vehicle Registration, and Message).');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid email address.');
       return;
     }
 
@@ -30,23 +43,57 @@ export default function ContactForm() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+      const submissionsMap: Record<string, unknown> = {
+        full_name_kf33v9: formData.name.trim(),
+        email_b4ae: formData.email.trim(),
+        vehicle_registration_ce8l9a: formData.vehicleRegistration.trim().toUpperCase(),
+        message_service_details_75vkcc: formData.message.trim()
+      };
+      if (formData.phone.trim()) {
+        submissionsMap.phone_c79c = formData.phone.trim();
+      }
 
-      const result = await response.json();
-      if (response.ok && result.ok) {
+      let submissionSuccess = false;
+
+      try {
+        const sub = await createSubmission(FORM_ID, submissionsMap);
+        if (sub && sub.id) {
+          submissionSuccess = true;
+        }
+      } catch (sdkErr) {
+        console.warn('[Wix Forms SDK createSubmission failed, attempting REST fallback]:', sdkErr);
+        try {
+          const wixRes = await wixFetch('/form-submission-service/v4/submissions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              submission: {
+                formId: FORM_ID,
+                submissions: submissionsMap
+              }
+            })
+          });
+          if (wixRes.ok) {
+            submissionSuccess = true;
+          } else {
+            const errText = await wixRes.text();
+            console.error('[Wix Forms REST submission failed]:', wixRes.status, errText);
+          }
+        } catch (restErr) {
+          console.error('[Wix Forms REST error]:', restErr);
+        }
+      }
+
+      if (submissionSuccess) {
         setSubmittedData({
           name: formData.name.trim(),
-          vehicleRegistration: formData.vehicleRegistration.trim()
+          vehicleRegistration: formData.vehicleRegistration.trim().toUpperCase()
         });
         setStatus('success');
-        setFormData({ name: '', vehicleRegistration: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', vehicleRegistration: '', message: '' });
       } else {
         setStatus('error');
-        setErrorMessage(result.error || 'Failed to submit enquiry. Please try again or message Charlie on WhatsApp.');
+        setErrorMessage('Failed to submit enquiry. Please try again or message Charlie on WhatsApp.');
       }
     } catch (err) {
       // Even if network glitches, provide a clear fallback
@@ -135,6 +182,41 @@ export default function ContactForm() {
             maxLength={100}
             required
             value={formData.name}
+            onChange={handleChange}
+            disabled={status === 'submitting'}
+          />
+        </div>
+
+        <div className="contact-form-field">
+          <label htmlFor="contact-email">
+            Email Address <span style={{ color: 'var(--color-primary)' }}>*</span>
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            placeholder="e.g. john@example.com"
+            autoComplete="email"
+            maxLength={100}
+            required
+            value={formData.email}
+            onChange={handleChange}
+            disabled={status === 'submitting'}
+          />
+        </div>
+
+        <div className="contact-form-field">
+          <label htmlFor="contact-phone">
+            Phone Number <span style={{ color: 'var(--color-muted-foreground)', fontSize: '11px', fontWeight: 'normal' }}>(optional)</span>
+          </label>
+          <input
+            id="contact-phone"
+            name="phone"
+            type="tel"
+            placeholder="e.g. 07940 834897"
+            autoComplete="tel"
+            maxLength={30}
+            value={formData.phone}
             onChange={handleChange}
             disabled={status === 'submitting'}
           />

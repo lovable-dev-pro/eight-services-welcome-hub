@@ -24,6 +24,8 @@ export const POST: APIRoute = async ({ request }) => {
       const formData = await request.formData();
       body = {
         name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
         vehicleRegistration: formData.get('vehicleRegistration'),
         message: formData.get('message')
       };
@@ -37,14 +39,16 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const name = typeof body.name === 'string' ? body.name.trim() : '';
+    const email = typeof body.email === 'string' ? body.email.trim() : '';
+    const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
     const vehicleRegistration = typeof body.vehicleRegistration === 'string' ? body.vehicleRegistration.trim() : '';
     const message = typeof body.message === 'string' ? body.message.trim() : '';
 
-    if (!name || !vehicleRegistration || !message) {
+    if (!name || !email || !vehicleRegistration || !message) {
       return new Response(
         JSON.stringify({
           ok: false,
-          error: 'Please provide full name, vehicle registration, and message.'
+          error: 'Please provide full name, email address, vehicle registration, and message.'
         }),
         {
           status: 400,
@@ -57,14 +61,20 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Submit to Wix Forms so Wix automations and dashboard notifications trigger
     try {
+      const submissionsMap: Record<string, string> = {
+        full_name_kf33v9: name,
+        email_b4ae: email,
+        vehicle_registration_ce8l9a: formattedReg,
+        message_service_details_75vkcc: message
+      };
+      if (phone) {
+        submissionsMap.phone_c79c = phone;
+      }
+
       const wixPayload = {
         submission: {
           formId: FORM_ID,
-          submissions: {
-            full_name_kf33v9: name,
-            vehicle_registration_ce8l9a: formattedReg,
-            message_service_details_75vkcc: message
-          }
+          submissions: submissionsMap
         }
       };
 
