@@ -44,11 +44,11 @@ export const POST: APIRoute = async ({ request }) => {
     const vehicleRegistration = typeof body.vehicleRegistration === 'string' ? body.vehicleRegistration.trim() : '';
     const message = typeof body.message === 'string' ? body.message.trim() : '';
 
-    if (!name || !email || !vehicleRegistration || !message) {
+    if (!name || !email || !phone || !vehicleRegistration || !message) {
       return new Response(
         JSON.stringify({
           ok: false,
-          error: 'Please provide full name, email address, vehicle registration, and message.'
+          error: 'Please provide full name, email address, phone number, vehicle registration, and message.'
         }),
         {
           status: 400,
@@ -64,12 +64,10 @@ export const POST: APIRoute = async ({ request }) => {
       const submissionsMap: Record<string, string> = {
         full_name_kf33v9: name,
         email_b4ae: email,
+        phone_c79c: phone,
         vehicle_registration_ce8l9a: formattedReg,
         message_service_details_75vkcc: message
       };
-      if (phone) {
-        submissionsMap.phone_c79c = phone;
-      }
 
       const wixPayload = {
         submission: {

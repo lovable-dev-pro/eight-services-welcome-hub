@@ -26,9 +26,9 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.vehicleRegistration.trim() || !formData.message.trim()) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.vehicleRegistration.trim() || !formData.message.trim()) {
       setStatus('error');
-      setErrorMessage('Please fill in all required fields (Name, Email, Vehicle Registration, and Message).');
+      setErrorMessage('Please fill in all required fields (Name, Email, Phone Number, Vehicle Registration, and Message).');
       return;
     }
 
@@ -39,6 +39,13 @@ export default function ContactForm() {
       return;
     }
 
+    const cleanPhone = formData.phone.trim().replace(/[^0-9+]/g, '');
+    if (cleanPhone.length < 5) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid phone number (e.g. 07940 834897).');
+      return;
+    }
+
     setStatus('submitting');
     setErrorMessage('');
 
@@ -46,12 +53,10 @@ export default function ContactForm() {
       const submissionsMap: Record<string, unknown> = {
         full_name_kf33v9: formData.name.trim(),
         email_b4ae: formData.email.trim(),
+        phone_c79c: formData.phone.trim(),
         vehicle_registration_ce8l9a: formData.vehicleRegistration.trim().toUpperCase(),
         message_service_details_75vkcc: formData.message.trim()
       };
-      if (formData.phone.trim()) {
-        submissionsMap.phone_c79c = formData.phone.trim();
-      }
 
       let submissionSuccess = false;
 
@@ -207,7 +212,7 @@ export default function ContactForm() {
 
         <div className="contact-form-field">
           <label htmlFor="contact-phone">
-            Phone Number <span style={{ color: 'var(--color-muted-foreground)', fontSize: '11px', fontWeight: 'normal' }}>(optional)</span>
+            Phone Number <span style={{ color: 'var(--color-primary)' }}>*</span>
           </label>
           <input
             id="contact-phone"
@@ -216,6 +221,7 @@ export default function ContactForm() {
             placeholder="e.g. 07940 834897"
             autoComplete="tel"
             maxLength={30}
+            required
             value={formData.phone}
             onChange={handleChange}
             disabled={status === 'submitting'}
