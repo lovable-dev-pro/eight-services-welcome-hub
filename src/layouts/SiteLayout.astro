@@ -1,0 +1,259 @@
+---
+import "../styles/global.css";
+import { getSiteSettings } from "../wix/cms/cms";
+
+export const prerender = false;
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const {
+  title = "Charlie’s Mobile Vehicle Servicing | Mobile Mechanic",
+  description = "Honest, reliable and affordable mobile vehicle servicing, maintenance and repairs from Charlie’s Mobile Vehicle Servicing.",
+  currentPath = Astro.url.pathname
+} = Astro.props;
+
+const settings = await getSiteSettings();
+
+const phoneLabel = settings.phone;
+const phoneHref = settings.phoneHref || `tel:${settings.phone.replace(/\s+/g, "")}`;
+const emailLabel = settings.email;
+const emailHref = `mailto:${settings.email}`;
+const whatsappHref = settings.whatsappLink;
+const logoSrc = settings.logo || "/charlie-mobile-vehicle-servicing-logo.png";
+const businessName = settings.businessName;
+const businessSubtitle = settings.businessSubtitle;
+const footerDescription = settings.footerDescription;
+const footerTagline = settings.footerTagline;
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" }
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <slot name="seo-tags" />
+  </head>
+  <body>
+    <header class="site-header" id="site-header">
+      <div class="site-container header-inner">
+        <a href="/" class="brand-lockup" aria-label={`${businessName} ${businessSubtitle} home`}>
+          <img
+            class="brand-mark"
+            src={logoSrc}
+            alt={`${businessName} ${businessSubtitle} badge`}
+            width="66"
+            height="66"
+          />
+          <span class="brand-wordmark">
+            <span class="brand-title">{businessName}</span>
+            <span class="brand-subtitle">{businessSubtitle}</span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="main-nav" aria-label="Main navigation">
+          {navLinks.map(({ label, href }) => (
+            <a
+              href={href}
+              class={currentPath === href || (href !== "/" && currentPath.startsWith(href)) ? "active" : ""}
+              aria-current={currentPath === href ? "page" : undefined}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        <!-- Header Actions: Call CTA & Mobile Toggle Button -->
+        <div class="header-actions">
+          <a href={phoneHref} class="brand-button btn-primary header-call" aria-label={`Call Charlie on ${phoneLabel}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+            </svg>
+            <span class="header-call-full">Call Charlie</span>
+            <span class="header-call-short">Call</span>
+          </a>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button
+            id="mobile-menu-btn"
+            class="mobile-toggle-btn"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav-drawer"
+            type="button"
+          >
+            <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+            <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+        <div class="site-container">
+          <nav class="mobile-nav-links" aria-label="Mobile navigation">
+            {navLinks.map(({ label, href }) => (
+              <a
+                href={href}
+                class={currentPath === href || (href !== "/" && currentPath.startsWith(href)) ? "active" : ""}
+                aria-current={currentPath === href ? "page" : undefined}
+              >
+                <span>{label}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            ))}
+          </nav>
+
+          <div class="mobile-nav-actions">
+            <a href={phoneHref} class="brand-button btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+              </svg>
+              Call Charlie
+            </a>
+            <a href={whatsappHref} target="_blank" rel="noreferrer" class="brand-button btn-outline">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path>
+              </svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Backdrop for mobile drawer -->
+    <div id="mobile-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-container footer-main">
+        <div>
+          <a href="/" class="brand-lockup footer-brand" aria-label={`${businessName} ${businessSubtitle} home`}>
+            <img
+              class="brand-mark"
+              src={logoSrc}
+              alt={`${businessName} ${businessSubtitle} badge`}
+              width="66"
+              height="66"
+            />
+            <span class="brand-wordmark">
+              <span class="brand-title" style="color: var(--color-on-dark);">{businessName}</span>
+              <span class="brand-subtitle">{businessSubtitle}</span>
+            </span>
+          </a>
+          <p class="footer-copy">
+            {footerDescription}
+          </p>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Get in touch</h2>
+          <div class="footer-links">
+            <a href={phoneHref}>{phoneLabel}</a>
+            <a href={emailHref}>{emailLabel}</a>
+            <a href={whatsappHref} target="_blank" rel="noreferrer">WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="footer-cta">
+          <h2 class="footer-heading">Need a quote?</h2>
+          <p>Tell Charlie what your vehicle needs.</p>
+          <a href="/contact" class="brand-button btn-on-dark">
+            Contact Charlie
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="site-container footer-bottom">
+        <span>&copy; {new Date().getFullYear()} {businessName} {businessSubtitle}</span>
+        <a href={emailHref}>{footerTagline}</a>
+      </div>
+    </footer>
+
+    <!-- Interactive Mobile Menu Toggle Script -->
+    <script is:inline>
+      (() => {
+        const header = document.getElementById('site-header');
+        const toggleBtn = document.getElementById('mobile-menu-btn');
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-backdrop');
+
+        if (!header || !toggleBtn || !drawer) return;
+
+        function setMenuState(open) {
+          const shouldOpen = Boolean(open);
+          if (shouldOpen) {
+            header.classList.add('menu-open');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            drawer.setAttribute('aria-hidden', 'false');
+            if (backdrop) backdrop.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('menu-locked');
+          } else {
+            header.classList.remove('menu-open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            drawer.setAttribute('aria-hidden', 'true');
+            if (backdrop) backdrop.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('menu-locked');
+          }
+        }
+
+        toggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = header.classList.contains('menu-open');
+          setMenuState(!isOpen);
+        });
+
+        if (backdrop) {
+          backdrop.addEventListener('click', () => setMenuState(false));
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && header.classList.contains('menu-open')) {
+            setMenuState(false);
+          }
+        });
+
+        // Close when clicking any nav link
+        const links = drawer.querySelectorAll('a');
+        links.forEach((link) => {
+          link.addEventListener('click', () => setMenuState(false));
+        });
+      })();
+    </script>
+  </body>
+</html>

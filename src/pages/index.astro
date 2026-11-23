@@ -1,0 +1,210 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getPageContent, getFeaturedServices, getSiteSettings } from "../wix/cms/cms";
+
+export const prerender = false;
+
+const content = await getPageContent("home");
+const featuredServices = await getFeaturedServices();
+const settings = await getSiteSettings();
+
+const whatsappQuoteHref = settings.whatsappLink;
+const phoneHref = settings.phoneHref || `tel:${settings.phone.replace(/\s+/g, "")}`;
+const heroImage = content.heroImage || "/charlie-workshop.jpg";
+---
+
+<SiteLayout
+  title={`${settings.businessName} ${settings.businessSubtitle} | Mobile Mechanic`}
+  description={settings.footerDescription}
+  currentPath="/"
+>
+  <!-- Hero Section -->
+  <section class="hero">
+    <img
+      class="hero-image"
+      src={heroImage}
+      alt={`${settings.businessName} mobile mechanic servicing a car in a professional garage`}
+      width="1600"
+      height="1008"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-content">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span> {content.heroEyebrow}
+      </div>
+      <h1 class="hero-title">
+        {content.heroTitle}
+        {content.heroTitleAccent && <span class="hero-title-accent">{content.heroTitleAccent}</span>}
+      </h1>
+      <p class="hero-copy">
+        {content.heroDescription}
+      </p>
+      <div class="hero-actions">
+        <a href={whatsappQuoteHref} target="_blank" rel="noreferrer" class="brand-button btn-primary">
+          Request a quote
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+        <a href={phoneHref} class="brand-button btn-on-dark">
+          Call {settings.phone}
+        </a>
+      </div>
+      <div class="hero-bottomline" aria-label="Our approach">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          Honest advice
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path>
+          </svg>
+          Reliable servicing
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Convenient mobile care
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Band -->
+  <section class="intro-band" aria-label={`${settings.businessName} approach`}>
+    <div class="site-container intro-inner">
+      <div>
+        <div class="intro-tagline">{content.introTagline}</div>
+        <div class="intro-caption">{content.introCaption}</div>
+      </div>
+      <div class="intro-items">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path>
+          </svg>
+          Vehicle servicing
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          Brake repairs
+        </span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          Mobile mechanic
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Services Block -->
+  <section class="site-container section-block">
+    <div class="section-heading">
+      <div>
+        <div class="section-kicker">{content.featuredSectionKicker}</div>
+        <h2 class="section-title">{content.featuredSectionTitle}</h2>
+      </div>
+      <p class="section-note">
+        {content.featuredSectionDescription}
+      </p>
+    </div>
+
+    <div class="feature-grid">
+      {featuredServices.map((service, index) => (
+        <article class="feature-item" key={service.id}>
+          <div class="feature-index">0{index + 1}</div>
+          <div class="feature-icon">
+            {service.icon === 'droplets' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path>
+                <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path>
+              </svg>
+            )}
+            {service.icon === 'gauge' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 14 4-4"></path>
+                <path d="M3.34 19a10 10 0 1 1 17.32 0"></path>
+              </svg>
+            )}
+            {service.icon === 'circle-gauge' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M6 12c0-1.7.7-3.2 1.8-4.2"></path>
+                <circle cx="12" cy="12" r="2"></circle>
+                <path d="M18 12c0 1.7-.7 3.2-1.8 4.2"></path>
+              </svg>
+            )}
+            {service.icon === 'wrench' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path>
+              </svg>
+            )}
+            {service.icon === 'settings' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 17H5"></path>
+                <path d="M19 7h-9"></path>
+                <circle cx="17" cy="17" r="3"></circle>
+                <circle cx="7" cy="7" r="3"></circle>
+              </svg>
+            )}
+            {service.icon === 'battery-charging' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m11 7-3 5h4l-3 5"></path>
+                <path d="M14.856 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.935"></path>
+                <path d="M22 14v-4"></path>
+                <path d="M5.14 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2.936"></path>
+              </svg>
+            )}
+            {service.icon === 'disc' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M6 12c0-1.7.7-3.2 1.8-4.2"></path>
+                <circle cx="12" cy="12" r="2"></circle>
+                <path d="M18 12c0 1.7-.7 3.2-1.8 4.2"></path>
+              </svg>
+            )}
+          </div>
+          <h3 class="feature-title">{service.title}</h3>
+          <p class="feature-description">{service.description}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="section-action">
+      <a href="/services" class="brand-button btn-outline">
+        Explore all services
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Service Callout -->
+  <section class="service-callout">
+    <div>
+      <h2>{content.calloutTitle}</h2>
+      <p>{content.calloutDescription}</p>
+    </div>
+    <a href="/contact" class="brand-button callout-button">
+      {content.calloutButtonText || "Get in touch"}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </a>
+  </section>
+</SiteLayout>

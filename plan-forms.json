@@ -1,0 +1,14 @@
+{
+  "forms": [
+    {
+      "name": "Vehicle Service Quote Enquiry",
+      "submitText": "Send Quote Enquiry",
+      "thankYou": "Thank you! Charlie will review your vehicle details and get back to you shortly.",
+      "fields": [
+        { "label": "Full Name", "kind": "text", "required": true, "placeholder": "e.g. John Smith" },
+        { "label": "Vehicle Registration", "kind": "text", "required": true, "placeholder": "e.g. AB12 CDE" },
+        { "label": "Message & Service Details", "kind": "textarea", "required": true, "placeholder": "Please describe the vehicle issue, service needed, and your location..." }
+      ]
+    }
+  ]
+}

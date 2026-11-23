@@ -1,0 +1,200 @@
+{
+  "collections": [
+    {
+      "id": "SiteSettings",
+      "displayName": "Site Settings",
+      "fields": [
+        { "key": "businessName", "displayName": "Business Name", "type": "TEXT" },
+        { "key": "businessSubtitle", "displayName": "Business Subtitle", "type": "TEXT" },
+        { "key": "phone", "displayName": "Phone Number", "type": "TEXT" },
+        { "key": "phoneHref", "displayName": "Phone Link (tel:)", "type": "TEXT" },
+        { "key": "email", "displayName": "Email Address", "type": "TEXT" },
+        { "key": "whatsappLink", "displayName": "WhatsApp Link", "type": "TEXT" },
+        { "key": "footerDescription", "displayName": "Footer Description", "type": "TEXT" },
+        { "key": "footerTagline", "displayName": "Footer Tagline", "type": "TEXT" },
+        { "key": "logo", "displayName": "Site Logo", "type": "IMAGE" }
+      ],
+      "items": [
+        {
+          "businessName": "Charlie’s",
+          "businessSubtitle": "Mobile Vehicle Servicing",
+          "phone": "+44 7940 834897",
+          "phoneHref": "tel:+447940834897",
+          "email": "charlievehicleservicing@gmail.com",
+          "whatsappLink": "https://wa.me/447940834897?text=Hi%20Charlie%2C%20I%E2%80%99d%20like%20to%20ask%20about%20a%20vehicle%20service.",
+          "footerDescription": "Mobile vehicle servicing and repairs, with the honest, reliable, affordable care Charlie’s known for.",
+          "footerTagline": "Honest. Reliable. Affordable.",
+          "logo": { "path": "public/charlie-mobile-vehicle-servicing-logo.png" }
+        }
+      ]
+    },
+    {
+      "id": "Services",
+      "displayName": "Services",
+      "fields": [
+        { "key": "title", "displayName": "Service Title", "type": "TEXT" },
+        { "key": "slug", "displayName": "Slug", "type": "TEXT" },
+        { "key": "order", "displayName": "Display Order", "type": "NUMBER" },
+        { "key": "description", "displayName": "Description", "type": "TEXT" },
+        { "key": "interval", "displayName": "Recommended Interval", "type": "TEXT" },
+        { "key": "included", "displayName": "Included Items", "type": "TEXT" },
+        { "key": "icon", "displayName": "Icon", "type": "TEXT" },
+        { "key": "isFeatured", "displayName": "Feature on Home Page", "type": "BOOLEAN" }
+      ],
+      "items": [
+        {
+          "title": "Oil & Filter Change",
+          "slug": "oil-filter-change",
+          "order": 1,
+          "description": "Engine oil and oil filter replacement using the correct manufacturer-recommended oil specification for your vehicle.",
+          "interval": "",
+          "included": "Manufacturer-specified oil\nOil filter replacement",
+          "icon": "droplets",
+          "isFeatured": true
+        },
+        {
+          "title": "Interim Service",
+          "slug": "interim-service",
+          "order": 2,
+          "description": "Routine maintenance to help keep your vehicle running as it should between full services.",
+          "interval": "Recommended every 6,000 miles or 6 months, whichever comes first.",
+          "included": "Engine oil & filter\nEssential fluid checks & top-ups\nGeneral vehicle health check",
+          "icon": "gauge",
+          "isFeatured": true
+        },
+        {
+          "title": "Full Service",
+          "slug": "full-service",
+          "order": 3,
+          "description": "A thorough scheduled service, including an engine air filter replacement.",
+          "interval": "Recommended every 12,000 miles or 12 months, whichever comes first.",
+          "included": "Engine oil & filter\nEngine air filter\nEssential fluid checks & top-ups\nGeneral vehicle health check",
+          "icon": "circle-gauge",
+          "isFeatured": false
+        },
+        {
+          "title": "Major Service",
+          "slug": "major-service",
+          "order": 4,
+          "description": "Comprehensive scheduled maintenance tailored to your manufacturer’s service schedule.",
+          "interval": "Recommended every 24,000 miles or 24 months, subject to manufacturer schedules.",
+          "included": "Engine oil & filters\nCabin and fuel filters where applicable\nSpark plugs where applicable\nBrake fluid when due\nComprehensive vehicle health check",
+          "icon": "wrench",
+          "isFeatured": false
+        },
+        {
+          "title": "Gearbox Oil Change",
+          "slug": "gearbox-oil-change",
+          "order": 5,
+          "description": "Gearbox oil replacement using the correct manufacturer-recommended specification, with filter replacement where applicable.",
+          "interval": "",
+          "included": "Correct gearbox oil specification\nFilter replacement where applicable",
+          "icon": "settings",
+          "isFeatured": false
+        },
+        {
+          "title": "Brake Fluid Change",
+          "slug": "brake-fluid-change",
+          "order": 6,
+          "description": "Brake fluid replacement using the correct specification for your vehicle to help maintain reliable braking performance.",
+          "interval": "",
+          "included": "Vehicle-specified brake fluid\nReplacement when due",
+          "icon": "droplets",
+          "isFeatured": false
+        },
+        {
+          "title": "Battery Replacement",
+          "slug": "battery-replacement",
+          "order": 7,
+          "description": "Supply and professional fitting of a suitable replacement vehicle battery.",
+          "interval": "",
+          "included": "Suitable replacement battery\nProfessional fitting",
+          "icon": "battery-charging",
+          "isFeatured": false
+        },
+        {
+          "title": "Brake Repairs & Replacement",
+          "slug": "brake-repairs",
+          "order": 8,
+          "description": "Supply and fitting of replacement brake pads and discs to help maintain safe, reliable braking performance.",
+          "interval": "",
+          "included": "Replacement brake pads\nReplacement brake discs",
+          "icon": "disc",
+          "isFeatured": true
+        }
+      ]
+    },
+    {
+      "id": "PageContent",
+      "displayName": "Page Content",
+      "fields": [
+        { "key": "pageKey", "displayName": "Page Key", "type": "TEXT" },
+        { "key": "heroEyebrow", "displayName": "Hero Eyebrow", "type": "TEXT" },
+        { "key": "heroTitle", "displayName": "Hero Title", "type": "TEXT" },
+        { "key": "heroTitleAccent", "displayName": "Hero Title Accent", "type": "TEXT" },
+        { "key": "heroDescription", "displayName": "Hero Description", "type": "TEXT" },
+        { "key": "heroImage", "displayName": "Hero Image", "type": "IMAGE" },
+        { "key": "introTagline", "displayName": "Intro Tagline", "type": "TEXT" },
+        { "key": "introCaption", "displayName": "Intro Caption", "type": "TEXT" },
+        { "key": "featuredSectionKicker", "displayName": "Featured Section Kicker", "type": "TEXT" },
+        { "key": "featuredSectionTitle", "displayName": "Featured Section Title", "type": "TEXT" },
+        { "key": "featuredSectionDescription", "displayName": "Featured Section Description", "type": "TEXT" },
+        { "key": "calloutTitle", "displayName": "Callout Title", "type": "TEXT" },
+        { "key": "calloutDescription", "displayName": "Callout Description", "type": "TEXT" },
+        { "key": "calloutButtonText", "displayName": "Callout Button Text", "type": "TEXT" },
+        { "key": "footnote", "displayName": "Footnote", "type": "TEXT" }
+      ],
+      "items": [
+        {
+          "pageKey": "home",
+          "heroEyebrow": "Mobile vehicle servicing",
+          "heroTitle": "Vehicle care.",
+          "heroTitleAccent": "On your terms.",
+          "heroDescription": "From regular servicing to brakes, batteries and oil changes, Charlie brings practical vehicle care to you.",
+          "heroImage": { "path": "public/charlie-workshop.jpg" },
+          "introTagline": "Honest. Reliable. Affordable.",
+          "introCaption": "Mobile vehicle servicing by Charlie.",
+          "featuredSectionKicker": "What Charlie can help with",
+          "featuredSectionTitle": "Good care for the miles ahead.",
+          "featuredSectionDescription": "From an oil and filter change to routine servicing and brake replacements, explore practical care for your vehicle.",
+          "calloutTitle": "Let’s talk about your vehicle.",
+          "calloutDescription": "Call, email or message Charlie to ask about a service or request a quote.",
+          "calloutButtonText": "Get in touch",
+          "footnote": ""
+        },
+        {
+          "pageKey": "services",
+          "heroEyebrow": "Straightforward vehicle care",
+          "heroTitle": "Services",
+          "heroTitleAccent": "",
+          "heroDescription": "Explore Charlie’s vehicle servicing, maintenance and repair options. Need to check what is right for your vehicle? Get in touch to ask or request a quote.",
+          "introTagline": "",
+          "introCaption": "",
+          "featuredSectionKicker": "",
+          "featuredSectionTitle": "",
+          "featuredSectionDescription": "",
+          "calloutTitle": "Have a question or need a quote?",
+          "calloutDescription": "Talk to Charlie about your vehicle and the service you have in mind.",
+          "calloutButtonText": "Request a quote",
+          "footnote": "Service intervals are recommendations. Major service items are subject to your vehicle manufacturer’s schedule, and some replacements apply only where relevant or due."
+        },
+        {
+          "pageKey": "contact",
+          "heroEyebrow": "Questions & quote requests",
+          "heroTitle": "Let’s talk about your vehicle.",
+          "heroTitleAccent": "",
+          "heroDescription": "Choose the way that works for you. Get in touch with Charlie to ask about a service or request a quote.",
+          "introTagline": "",
+          "introCaption": "",
+          "featuredSectionKicker": "",
+          "featuredSectionTitle": "",
+          "featuredSectionDescription": "",
+          "calloutTitle": "",
+          "calloutDescription": "",
+          "calloutButtonText": "",
+          "footnote": ""
+        }
+      ]
+    }
+  ]
+}

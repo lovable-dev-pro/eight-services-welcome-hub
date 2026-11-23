@@ -1,0 +1,116 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ContactForm from "../components/ContactForm";
+import { getPageContent, getSiteSettings } from "../wix/cms/cms";
+
+export const prerender = false;
+
+const content = await getPageContent("contact");
+const settings = await getSiteSettings();
+
+const phoneLabel = settings.phone;
+const phoneHref = settings.phoneHref || `tel:${settings.phone.replace(/\s+/g, "")}`;
+const emailLabel = settings.email;
+const emailHref = `mailto:${settings.email}`;
+const whatsappHref = settings.whatsappLink;
+
+const contactOptions = [
+  {
+    id: "phone",
+    label: `Call ${settings.businessName}`,
+    value: phoneLabel,
+    href: phoneHref,
+    action: "Call now",
+    type: "phone"
+  },
+  {
+    id: "email",
+    label: `Email ${settings.businessName}`,
+    value: emailLabel,
+    href: emailHref,
+    action: "Send an email",
+    type: "email"
+  },
+  {
+    id: "whatsapp",
+    label: `WhatsApp ${settings.businessName}`,
+    value: phoneLabel,
+    href: whatsappHref,
+    action: "Open WhatsApp",
+    type: "whatsapp",
+    external: true
+  }
+];
+---
+
+<SiteLayout
+  title={`Contact & Quotes | ${settings.businessName} ${settings.businessSubtitle}`}
+  description={content.heroDescription}
+  currentPath="/contact"
+>
+  <section class="page-heading">
+    <div class="site-container contact-intro">
+      <div>
+        <div class="section-kicker">{content.heroEyebrow}</div>
+        <h1 class="section-title">{content.heroTitle}</h1>
+        <p class="page-hero-description">
+          {content.heroDescription}
+        </p>
+      </div>
+
+      <a href={whatsappHref} target="_blank" rel="noreferrer" class="brand-button btn-primary">
+        Message on WhatsApp
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 7h10v10"></path>
+          <path d="M7 17 17 7"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="site-container contact-page">
+    <!-- Quick Direct Contact Options -->
+    <div class="contact-grid">
+      {contactOptions.map((option) => (
+        <a
+          href={option.href}
+          class="contact-option"
+          target={option.external ? "_blank" : undefined}
+          rel={option.external ? "noreferrer" : undefined}
+          key={option.id}
+        >
+          <span class="contact-option-icon">
+            {option.type === 'phone' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+              </svg>
+            )}
+            {option.type === 'email' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              </svg>
+            )}
+            {option.type === 'whatsapp' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path>
+              </svg>
+            )}
+          </span>
+          <span class="contact-option-label">{option.label}</span>
+          <strong>{option.value}</strong>
+          <span class="contact-action">
+            {option.action}
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 7h10v10"></path>
+              <path d="M7 17 17 7"></path>
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Active Quote Enquiry Submission Form -->
+    <ContactForm client:load />
+  </div>
+</SiteLayout>
